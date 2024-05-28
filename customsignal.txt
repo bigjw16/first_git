@@ -1,7 +1,6 @@
 import sys,os
 
-from PyQt6.QtWidgets import (QApplication, QMainWindow,
-                                                                         QWidget, QLabel, QVBoxLayout)
+from PyQt6.QtWidgets import (QApplication, QMainWindow, QWidget, QLabel, QVBoxLayout)
 
 from PyQt6.QtGui import QPixmap, QKeyEvent
 from PyQt6.QtCore import Qt, pyqtSignal, QObject, QSize
