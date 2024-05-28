@@ -1,1 +1,3 @@
-배운내용 정리 해서 업로드 하기 
+insertion(붕어빵) = messode(붕어빵틀)
+코드로 Qt 디자인 하기
+Qt designer로 디자인 후 코드로 연결 시켜 주기
