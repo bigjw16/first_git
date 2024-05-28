@@ -1,3 +1,152 @@
-insertion(붕어빵) = messode(붕어빵틀)
-코드로 Qt 디자인 하기
-Qt designer로 디자인 후 코드로 연결 시켜 주기
+pyside(pyqt)기본 개념
+object = instance 
+class = 일종의 type
+instance(붕어빵) = class(붕어빵틀) --> class가 실체화 됨을 나타냄, type의 변수
+
+oop = 상호작용을 통해 구현, 모듈화가 자연스럽고 재사용성이 높음
+공통적인 것을 상위에 특성 있는 것을 하위 폴더에 배치 
+________________________________________________________________________________________
+<oop 실행파일>
+import matplotlib.pyplot as plt
+import matplotlib
+import oop.Circle
+import oop.Point
+import oop.Rectangle
+
+def test_external_axes():
+    fig,axes = plt.subplots(figsize=(5,5))
+    a = oop.Point.Point(2,2,axes)
+    axes = a.draw()
+    b = oop.Circle.Circle(4,4,2,axes)
+    b.draw()
+    plt.show()
+
+def test_internal_axes():
+    c = oop.Rectangle.Rectangle(0,0,6,6)
+    c.draw()
+    c.show()
+
+if __name__ == "__main__":
+    print(matplotlib.__version__)
+    test_internal_axes()
+    
+________________________________________________________________________________________________
+<oop 구현파일>
+import matplotlib.pyplot as plt
+import matplotlib.patches
+from .Point import Point
+
+class Rectangle(Point):
+    
+    def __init__(self, x, y, w, h, _axes=None):
+        super().__init__(x,y,_axes)
+        self.w = w
+        self.h = h
+    
+    def draw(self):
+        super().draw()
+        r = matplotlib.patches.Rectangle(
+            xy = (self.x,self.y),
+            width = self.w,
+            height = self.h, 
+            ec = 'black',
+            fc = 'blue',
+            fill = False,
+            angle = 45
+        )
+        self.axes.add_patch(r)
+        return self.axes
+    
+if __name__ == "__main__":
+    a = Rectangle(3,3,1,1)
+    a.draw()
+    a.show()
+_________________________________________________________________________________________________
+위와 같은 형식으로 실제 특성을 저장한 코드 파일과 실행할 코드 파일을 따로 설정하여 비슷한
+기능을 구현하는 파일 제작시 하위 구현 코드만을 변경하여 실행 시킬 수 있도록 나눔 
+
+pyside(pyqt)의 주요 modules 3가지
+1. QtGui: 기본적인 그래픽 기능 (이미지, 폰트, 픽셀 등)
+2. Qtwidgets: widget 기능 
+3. QtCore: 기본 기능 (메모리, 네트워크, 시스템 등)
+
+Main window의 구성
+1. Menu bar
+2. Tool bar
+3. Dock widgets
+4. Central widget
+5. Status bar
+
+__________________________________________________________________________________________________
+<초기화 설정>
+import sys
+from PySide6.QtWidgets import (QMainwindow, QWidgets, ...)
+def __init__(self):
+  super().__init__()
+  self.init_ui()
+
+def init_ui(self): 
+  self.setMinimumSize(400, 500)
+  self.setWindowTitle("Title of Main Window")
+  ...
+  self.show()
+if __name__ == "__main__"":
+    app = QApplication(sys.argv)
+    wnd = MW()
+    sys.exit(app.exec())
+__________________________________________________________________________________________________
+위의 코드는 central widget 설정을 하지 않은 기본적인 window를 만드는 방법이다.
+
+QFont: Gui에서 사용할 Font를 설정
+QPixmap
+QPushButton
+QLIneEdit
+QRadioButton
+QCheckBox
+QGroupBox
+QComboBox
+QSlider
+QSpinBox
+QDoubleSpinBox
+QProgressBar
+QTextEdit
+QHBoxLayout
+QVBoxLayout
+QGridLayout
+QMessageBox
+QInputDialog
+QDialog
+QFileDialog
+QMenuBar
+QToolBar
+QStatusBar
+Q
+
+__________________________________________________________________________________________________
+QtDesigner를 활용한 GUI 설정
+
+
+__________________________________________________________________________________________________
+GIT 사용법
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
