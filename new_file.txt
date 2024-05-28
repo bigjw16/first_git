@@ -97,30 +97,33 @@ if __name__ == "__main__"":
 __________________________________________________________________________________________________
 위의 코드는 central widget 설정을 하지 않은 기본적인 window를 만드는 방법이다.
 
+
+Qlabel: Gui에서 고정된 text를 보여주거나 고정된 image를 보여줌
 QFont: Gui에서 사용할 Font를 설정
-QPixmap
-QPushButton
-QLIneEdit
-QRadioButton
-QCheckBox
-QGroupBox
-QComboBox
-QSlider
-QSpinBox
+QPixmap: Gui에서 image를 나타냄 -->(file 경로 찾기)
+QPushButton: Gui에서 click하면 정해진 처리가 수행되는 방식으로 event 처리
+QLIneEdit: 한줄의 문자열 입력에 사용되는 widget
+QRadioButton: 여러 option(선택지) 중에 하나를 선택하는 경우 사용되는 widget
+QCheckBox: 여러 option(선택지) 중에 여러개를 선택하는 경우 사용되는 widget
+QGroupBox: 
+QComboBox: 사전에 정의된 항목 중에서 입력받는 widget
+QSlider: 범위내에서 value를 선택하거나 조절할 수 있는 slider을 제공하는 widget
+QSpinBox: 
 QDoubleSpinBox
 QProgressBar
-QTextEdit
-QHBoxLayout
-QVBoxLayout
-QGridLayout
-QMessageBox
-QInputDialog
-QDialog
-QFileDialog
-QMenuBar
-QToolBar
-QStatusBar
-Q
+QTextEdit: 여러 줄의 text를 입력받을 수 있는 widget
+QHBoxLayout: widget을 수평으로 배치
+QVBoxLayout: widget을 수직으로 배치
+QGridLayout: widget을 격자모양으로 배치
+QMessageBox: 사용자에게 공지를 하기 위한 dialog (information, about, question, critical, warning),
+QInputDialog: 사용자로부터 문자열, 숫자 등을 입력받기 위한 dialog
+QDialog: dialog box를 추상화하여 dialog에 필요한 표준 기능들을 미리 구현하고 있는 class
+QFileDialog: 사용자가 file이나 directory를 선택하면 path를 표시하는 인터페이스 제공
+QMenuBar: Gui Application에서 실행가능한 command들을 사용자가 쉽게 접근 및 제어 할 수 있도록 해주는 Tool
+QStatusBar: user interface에서 상태 정보를 표시하는 영역으로 window 하단에 위치
+
+
+moduless, model dialog: 
 
 __________________________________________________________________________________________________
 QtDesigner를 활용한 GUI 설정
