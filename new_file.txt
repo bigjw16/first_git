@@ -123,14 +123,19 @@ QMenuBar: Gui Application에서 실행가능한 command들을 사용자가 쉽게 접근 및 제어 
 QStatusBar: user interface에서 상태 정보를 표시하는 영역으로 window 하단에 위치
 
 
-moduless, model dialog: 
+modeless dialog: 대화상자가 종료되지 않더라도 Mainwindow를 제어할 수 있음 
+modal dialog: 대화상자가 종료되기 전까지 Mainwindow를 제어할 수 없음
 
 __________________________________________________________________________________________________
 QtDesigner를 활용한 GUI 설정
 
+기본 방법: Qt designer을 통한 Ui 구성 이후 해당 widget들을 동작하도록 연결
+
 
 __________________________________________________________________________________________________
 GIT 사용법
+
+GIT: 분산형 버전 관리 시스템(DVCS)로 자유롭게 로컬, 서버를 오가며 작업 가능
 
 
 
