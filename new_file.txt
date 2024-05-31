@@ -136,7 +136,46 @@ ________________________________________________________________________________
 GIT 사용법
 
 GIT: 분산형 버전 관리 시스템(DVCS)로 자유롭게 로컬, 서버를 오가며 작업 가능
+__________________________________________________________________________________________________
+Untracked	Unmodified	Modified		staged
+      -----------------------------add file--------------------------->
+		       -------edit file----->
+				     -------stage file---->
+      <-----remove file----
+		       <-----------------commit----------------
+__________________________________________________________________________________________________
 
+GIT 기본 명령어
+init: local dictory를 git repository로 만드는 명령어
+status: working directory의 파일 상태를 확인하는 명령어
+add: untracked file을 stage에 이동시키는 명령어(Tracked file로 변경됨)
+commit: stage에서 repository로 이동시켜 version관리를 시작하게 하는 명령어
+	--amend: repository에 올라간 commit 수정하는 명령어
+log: commit history를 보여주는 명령어
+	--branches: 모든 branch의 commit history를 출력
+	--oneline: commit들을 한 line으로 출력
+	-n <int>: commit history에서 출력할 commit의 수를 지정
+	--stat: commit에서 변경된 파일과 추가 및 삭제된 line수(statistics)를 출력
+	--graph: branches의 merge 등의 관계를 ascii graph로 출력
+diff: 파일을 비교하여 차이를 보여주는 명령어, 변경된 내용 확인시켜주는 명령어
+	--staged: 
+	--HEAD: 
+rm: stage에 있는 tracked file을 삭제하는 명령어
+mv: 파일 이름을 변경해주는 명령어
+restore: stated가 된 파일을 다시 working tree로 되돌리거나 working tree의 수정사항을 최근 
+           commit으로 다시 돌리는 명령어, commit 이전에서 되돌리기에 주로 사용된다.
+revert: repository에 반영된 내용을 취소하는 명령어 자동으로 commit이 이루어진다.
+reset: repository, stage, working tree의 상태를 원하는 시점으로 복원하는 데 사용하는 명령어
+branch: 프로젝트를 독립적으로 관리할 수 있도록 분리시켜줌
+switch: branch의 전환 및 new branch 생성 및 전환
+merge: 두개 이상의 브랜치를 병합하는데 사용하는 명령어
+rebase: merge명령어로 수행되지 않지만 branch를 병합하는데 사용됨 base commit을 변경하여
+          일직선 구조의 branch를 만들 수 있음
+tag:
+clone:
+push:
+pull:
+stash:
 
 
 
