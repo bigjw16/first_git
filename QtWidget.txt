@@ -1,0 +1,727 @@
+___________________________________________________________________________________________________
+<QLineEdit>
+import sys
+
+from PySide6.QtWidgets import (QApplication, QWidget, QLabel, QVBoxLayout, QLineEdit)
+
+class MW (QWidget):
+
+    def __init__(self):
+        super().__init__()
+        self.init_ui()
+
+    def init_ui(self):
+        self.setWindowTitle("Ex: QCheckbox")
+        self.setup_main_wnd()
+        self.show()
+
+    def setup_main_wnd(self):
+        lm = QVBoxLayout()
+
+        lm.addWidget(QLabel('What is most important?'))
+
+
+        self.le = QLineEdit()
+        self.le.setMaxLength(10)
+        self.le.returnPressed.connect(self.on_return_pressed)
+        self.le.textChanged.connect(self.on_changed)
+        self.le.textEdited.connect(self.on_edited)
+        self.le.editingFinished.connect(self.on_editing_finished)
+        lm.addWidget(self.le)
+
+        self.dp_label0 = QLabel()
+        lm.addWidget(self.dp_label0)
+        self.dp_label1 = QLabel()
+        lm.addWidget(self.dp_label1)
+        self.dp_label2 = QLabel()
+        lm.addWidget(self.dp_label2)
+
+        self.dp_label3 = QLabel()
+        lm.addWidget(self.dp_label3)
+        self.le.textChanged.connect(self.dp_label3.setText)        
+
+        self.setLayout(lm)
+
+    def on_return_pressed(self):
+        tmp = self.le.selectedText()
+        print(f'selected text:{tmp}')
+
+    def on_changed(self, text):
+        tmp = "textChanged:"
+        tmp += text 
+        self.dp_label0.setText(tmp)
+
+    def on_edited(self, text):
+        tmp = "textEdited:"
+        tmp += text 
+        self.dp_label1.setText(tmp)
+
+    def on_editing_finished(self):
+        tmp = "editingFinished"
+        tmp += self.le.text() 
+        self.dp_label2.setText(tmp)
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    main_wnd = MW()
+    sys.exit(app.exec())
+___________________________________________________________________________________________________
+<QRadioButton>
+import sys
+
+from PySide6.QtWidgets import (QApplication, QWidget, QLabel, QVBoxLayout, QRadioButton 
+			    ,QButtonGroup)
+from PySide6.QtCore import Qt
+
+class MW (QWidget):
+
+    def __init__(self):
+        super().__init__()
+        self.init_ui()
+
+    def init_ui(self):
+        self.setWindowTitle("Ex: QRadioButton")
+        self.setup_main_wnd()
+        self.show()
+
+    def setup_main_wnd(self):
+
+        self.rb01 = QRadioButton('1. faith')
+        self.rb02 = QRadioButton('2. hope')
+        self.rb03 = QRadioButton('3. love')
+        self.dp_label = QLabel("")
+
+        lm = QVBoxLayout()        
+        lm.addWidget(QLabel('What is most important?'))
+        lm.addWidget(self.rb01)
+        lm.addWidget(self.rb02)
+        lm.addWidget(self.rb03) 
+        lm.addWidget(self.dp_label)
+
+        self.setLayout(lm)
+
+        self.bg = QButtonGroup(self)        
+        self.bg.addButton(self.rb01)
+        self.bg.addButton(self.rb02)
+        self.bg.addButton(self.rb03)
+
+        self.bg.buttonClicked.connect(self.ck_click)
+
+    def ck_click(self, button):      
+        tmp = button.text()         
+        self.dp_label.setText(tmp)
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    main_wnd = MW()
+    sys.exit(app.exec())
+___________________________________________________________________________________________________
+<QCkeckBox>
+import sys
+
+from PySide6.QtWidgets import (QApplication, QWidget, QLabel, QVBoxLayout, QCheckBox,
+			    ,QButtonGroup)
+from PySide6.QtCore import Qt
+
+class MW (QWidget):
+
+    def __init__(self):
+        super().__init__()
+        self.init_ui()
+
+    def init_ui(self):
+        self.setWindowTitle("Ex: QCheckbox")
+        self.setup_main_wnd()
+        self.show()
+
+    def setup_main_wnd(self):
+
+        self.cb01 = QCheckBox('1. faith')
+        self.cb02 = QCheckBox('2. hope')
+        self.cb03 = QCheckBox('3. love')
+        self.dp_label = QLabel("")
+
+        lm = QVBoxLayout()
+        self.setLayout(lm)
+        lm.addWidget(QLabel('What is most important?'))
+        lm.addWidget(self.cb01)
+        lm.addWidget(self.cb02)
+        lm.addWidget(self.cb03)
+        lm.addWidget(self.dp_label)
+
+        self.bg = QButtonGroup(self)
+        self.bg.addButton(self.cb01)
+        self.bg.addButton(self.cb02)
+        self.bg.addButton(self.cb03)
+        self.bg.setExclusive(True)
+        self.bg.buttonClicked.connect(self.ck_click)
+
+        self.cb = QCheckBox('Check it for the multiple selection.')
+        self.cb.setChecked(not self.bg.exclusive())
+        self.cb.toggled.connect(self.ck_multiple)
+        lm.addWidget(self.cb)
+
+    def ck_click(self, button):
+
+        tmp = button.text()
+        self.dp_label.setText(tmp)
+
+    def ck_multiple(self, state):
+
+        self.reset_ckbox(False)
+        print("ck_multiple:",state)
+        if state:
+            self.bg.setExclusive(False)
+        else:
+            self.bg.setExclusive(True)
+
+    def reset_ckbox(self, state):
+
+        old_exclusive = self.bg.exclusive()
+        self.bg.setExclusive(False)
+
+        for cb in self.bg.buttons():
+            cb.setChecked(state)
+
+        self.bg.setExclusive(old_exclusive)
+        print("--------------")
+
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    main_wnd = MW()
+    sys.exit(app.exec())
+___________________________________________________________________________________________________
+<QGroupBox>
+import sys, os
+from PySide6.QtWidgets import (QApplication, QWidget, 
+                             QRadioButton, QCheckBox, QButtonGroup,
+                             QHBoxLayout,QVBoxLayout,
+                             QGroupBox)
+from PySide6.QtCore import Qt
+
+class MW (QWidget):
+
+    def __init__(self):
+        super().__init__()
+        self.init_ui()
+
+    def init_ui(self):
+        self.setMinimumSize(400,200)
+        self.setWindowTitle("QGroupBox Ex")
+        self.setup_main_wnd()
+        self.show()
+
+    def setup_main_wnd(self):
+
+        lm = QHBoxLayout()
+        self.checks = QGroupBox("QCheckBox Grp")
+        self.checks.setCheckable(True)
+        self.checks.setChecked(False)
+        self.radios = QGroupBox("QRadioButton Grp")
+        lm.addWidget(self.checks)
+        lm.addWidget(self.radios)
+
+        self.set_checks()
+        self.set_radios()
+
+        self.setLayout(lm)
+
+    def set_checks(self):
+
+        lm = QVBoxLayout()
+
+        self.button_grp_checks = QButtonGroup()
+        for idx in range(3):
+            cb = QCheckBox(f"check {idx}")
+            self.button_grp_checks.addButton(cb)
+            lm.addWidget(cb)
+        self.checks.setLayout(lm)
+        self.button_grp_checks.setExclusive(False)
+        self.button_grp_checks.buttonClicked.connect(self.toggle_check_box)
+        self.checks.clicked.connect(self.clk_checks)
+
+    def set_radios(self):
+
+        lm = QVBoxLayout()
+        self.button_grp_radios = QButtonGroup()
+        for idx in range(3):
+            rb = QRadioButton(f"radio {idx}")
+            self.button_grp_radios.addButton(rb)
+            lm.addWidget(rb)
+        self.radios.setLayout(lm)
+        self.button_grp_radios.setExclusive(False)
+        self.button_grp_radios.buttonClicked.connect(self.toggle_radio_btn)
+        self.radios.clicked.connect(self.clk_radios)
+
+    def toggle_check_box(self, state):
+        # if state:
+        #     print(self.sender().text())
+
+        for c in self.button_grp_checks.buttons():
+            # if c.checkState() == Qt.CheckState.Checked:
+            if c.isChecked():
+                print(c.text())
+
+        print("======================")    
+        print()
+        print("======================")
+
+        # ---------------------------------
+        # # 아래는 
+        # # checked button 반환이나 
+        # # 여러개를 선택할 수 있는 경우 
+        # # 동작이 독특하므로 주석을 해제하고,
+        # # 한번 테스트 해볼것.
+        # a = self.button_grp_checks.checkedButton()
+        # if a is not None:                    
+        #     print(a.text())
+        # else:
+        #     print('not checked!')                    
+        # print("======================")    
+    def toggle_radio_btn(self, state):
+        # if state:
+        #     print("sender:", self.sender().text())
+
+        for idx, c in enumerate(self.button_grp_radios.buttons()):
+            if c.isChecked():
+                print(idx,c.text())    
+        print("======================\n\n")
+
+        # ---------------------------------
+        # # 아래는 
+        # # checked button 반환이나 
+        # # 여러개를 선택할 수 있는 경우 
+        # # 동작이 독특하므로 주석을 해제하고,
+        # # 한번 테스트 해볼것.
+        # a = self.button_grp_radios.checkedButton()
+        # if a is not None:                    
+        #     print(a.text())
+        # else:
+        #     print('not checked!')                    
+        # print("======================")
+
+    def clk_checks(self, checked):
+        print("checks!")
+        print(checked)
+    def clk_radios(self, button):
+        print("radios!")
+        print(button)
+
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    wnd = MW()
+    sys.exit(app.exec())             
+import sys, os
+from PySide6.QtWidgets import (QApplication, QWidget, 
+                             QRadioButton, QCheckBox, QButtonGroup,
+                             QHBoxLayout,QVBoxLayout,
+                             QGroupBox)
+from PySide6.QtCore import Qt
+
+class MW (QWidget):
+
+    def __init__(self):
+        super().__init__()
+        self.init_ui()
+
+    def init_ui(self):
+        self.setMinimumSize(400,200)
+        self.setWindowTitle("QGroupBox Ex")
+        self.setup_main_wnd()
+        self.show()
+
+    def setup_main_wnd(self):
+
+        lm = QHBoxLayout()
+        self.checks = QGroupBox("QCheckBox Grp")
+        self.checks.setCheckable(True)
+        self.checks.setChecked(False)
+        self.radios = QGroupBox("QRadioButton Grp")
+        lm.addWidget(self.checks)
+        lm.addWidget(self.radios)
+
+        self.set_checks()
+        self.set_radios()
+
+        self.setLayout(lm)
+
+    def set_checks(self):
+
+        lm = QVBoxLayout()
+
+        self.button_grp_checks = QButtonGroup()
+        for idx in range(3):
+            cb = QCheckBox(f"check {idx}")
+            self.button_grp_checks.addButton(cb)
+            lm.addWidget(cb)
+        self.checks.setLayout(lm)
+        self.button_grp_checks.setExclusive(False)
+        self.button_grp_checks.buttonClicked.connect(self.toggle_check_box)
+        self.checks.clicked.connect(self.clk_checks)
+
+    def set_radios(self):
+
+        lm = QVBoxLayout()
+        self.button_grp_radios = QButtonGroup()
+        for idx in range(3):
+            rb = QRadioButton(f"radio {idx}")
+            self.button_grp_radios.addButton(rb)
+            lm.addWidget(rb)
+        self.radios.setLayout(lm)
+        self.button_grp_radios.setExclusive(False)
+        self.button_grp_radios.buttonClicked.connect(self.toggle_radio_btn)
+        self.radios.clicked.connect(self.clk_radios)
+
+    def toggle_check_box(self, state):
+
+        for c in self.button_grp_checks.buttons():
+            if c.isChecked():
+                print(c.text())
+
+        print("======================")    
+        print()
+        print("======================")
+
+    def toggle_radio_btn(self, state):
+
+        for idx, c in enumerate(self.button_grp_radios.buttons()):
+            if c.isChecked():
+                print(idx,c.text())    
+        print("======================\n\n")
+
+    def clk_checks(self, checked):
+        print("checks!")
+        print(checked)
+    def clk_radios(self, button):
+        print("radios!")
+        print(button)
+
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    wnd = MW()
+    sys.exit(app.exec())
+___________________________________________________________________________________________________
+<QComboBox>
+import sys
+
+from PyQt6.QtWidgets import (QApplication, QWidget, QLabel, QVBoxLayout, QComboBox)
+from PyQt6.QtCore import Qt
+
+class MW (QWidget):
+
+    def __init__(self):
+        super().__init__()
+        self.init_ui()
+
+    def init_ui(self):
+        self.setWindowTitle("Ex: QCombobox")
+        self.setup_main_wnd()
+        self.show()
+
+    def setup_main_wnd(self):
+        lm = QVBoxLayout()
+
+        lm.addWidget(QLabel('What is most important?'))
+
+        self.items = ['faith', 'hope', 'love']
+
+        cb = QComboBox()
+
+        for idx, c in enumerate(self.items):
+            cb.addItem(c)
+
+        cb.activated.connect(self.on_selected)
+        cb.currentIndexChanged.connect(self.on_current_idx_changed)
+        lm.addWidget(cb)
+
+
+        self.dp_label = QLabel("")
+        lm.addWidget(self.dp_label)
+
+        self.setLayout(lm)
+
+    def on_selected(self, idx):
+        tmp = "you selected :"
+        tmp += self.items[idx] 
+
+        print(tmp)
+        self.dp_label.setText(tmp)
+
+    def on_current_idx_changed(self, idx):
+        print(f'"currentIndexChanged" occured {idx}')
+
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    main_wnd = MW()
+    sys.exit(app.exec())
+___________________________________________________________________________________________________
+<QSlider>
+import sys
+from PySide6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, 
+			    ,QSlider)
+from PySide6.QtCore import Qt
+
+class MW(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.init_ui()
+        self.show()
+
+    def init_ui(self):
+        self.setWindowTitle("QSlider Ex.")
+        self.setGeometry(100, 100, 300, 200)
+
+        central_widget = QWidget()
+        self.setCentralWidget(central_widget)
+
+        layout = QVBoxLayout()
+        central_widget.setLayout(layout)
+
+        slider = QSlider(Qt.Horizontal)
+
+        slider.setMinimum(0)
+        slider.setMaximum(255)
+        slider.setValue(0)
+        slider.setTickInterval(10)
+        slider.setTickPosition(QSlider.TicksBelow)
+        slider.setSingleStep(1)  
+        slider.setPageStep(10) 
+
+        slider.valueChanged.connect(self.on_change_bg_color)
+
+        layout.addWidget(slider)
+
+    def on_change_bg_color(self, value):
+        self.centralWidget().setStyleSheet(f"background-color: rgb({value}, {value}, {value});")
+
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    main_window = MW()
+    sys.exit(app.exec())
+___________________________________________________________________________________________________
+<QSpinBox>>
+import sys
+from PySide6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, 
+			    ,QSpinBox, QLabel)
+
+class MW(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.init_ui()
+
+    def init_ui(self):
+        self.setWindowTitle("QSpinBox Ex.")
+        self.setGeometry(100, 100, 300, 200)
+
+        central_widget = QWidget()
+        self.setCentralWidget(main_widget)
+
+        layout = QVBoxLayout()
+        main_widget.setLayout(layout)
+
+        spinbox = QSpinBox()
+        spinbox.setMinimum(0)
+        spinbox.setMaximum(100)
+        spinbox.setValue(50)
+        spinbox.setSingleStep(1)
+
+        spinbox.valueChanged.connect(self.on_value_changed)
+
+        layout.addWidget(spinbox)
+
+        self.label = QLabel("Selected Value: 50")
+        layout.addWidget(self.label)
+
+    def on_value_changed(self, value):
+        self.label.setText(f"Selected Value: {value}")
+
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    main_window = MW()
+    main_window.show()
+    sys.exit(app.exec())
+
+___________________________________________________________________________________________________
+<QDoubleSpinBox>
+
+___________________________________________________________________________________________________
+<QProgressBar>
+import sys
+
+from PySide6.QtWidgets import (QApplication, QMainWindow, QProgressBar, QPushButton,
+    			    ,QWidget, QVBoxLayout)
+from PySide6.QtCore import QTimer
+
+class MW(QMainWindow):
+
+    def __init__(self):
+        super(MW, self).__init__()
+        self.setWindowTitle("ex: QProgressBar")
+        self.setGeometry(200, 200, 300, 150)
+
+        self.progressBar = QProgressBar(minimum=0, maximum=10)
+        self.progressValue = self.progressBar.minimum()
+
+        self.startButton = QPushButton("start")
+        self.startButton.clicked.connect(self.startProgress)
+
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.updateProgress)        
+
+        lm = QVBoxLayout()
+        lm.addWidget(self.progressBar)
+        lm.addWidget(self.startButton)
+
+        tmp = QWidget()
+        tmp.setLayout(lm)
+
+        self.setCentralWidget(tmp)
+        self.show()
+
+    def startProgress(self):
+        self.progressBar.reset()
+        self.progressValue = self.progressBar.value()
+        self.startButton.setEnabled(False)
+        self.timer.start(100)
+
+    def updateProgress(self):
+        self.progressValue += 1
+        self.progressBar.setValue(self.progressValue)
+        if self.progressValue >= self.progressBar.maximum():
+            self.timer.stop()
+            # self.progressBar.reset()
+            self.startButton.setEnabled(True)
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = MW()
+    sys.exit(app.exec())
+___________________________________________________________________________________________________
+<QTextEidt>
+from PySide6.QtWidgets import (QApplication, QMainWindow, QTextEdit, QLineEdit, 
+			    ,QPushButton, QVBoxLayout, QWidget, QHBoxLayout, 
+			    ,QMessageBox)
+from PySide6.QtGui import QTextCursor, QTextCharFormat, QColor
+
+class Notepad(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.init_ui()
+
+    def init_ui(self):
+
+        centralWidget = QWidget()
+        self.setCentralWidget(centralWidget)
+        layout = QVBoxLayout()
+
+        self.textEdit = QTextEdit()
+        layout.addWidget(self.textEdit)
+
+        self.searchLineEdit = QLineEdit()
+        self.searchLineEdit.setPlaceholderText("Enter search text")
+        self.searchButton = QPushButton("Search and Replace")
+        self.searchButton.clicked.connect(self.searchAndReplace)
+        searchLayout = QHBoxLayout()
+        searchLayout.addWidget(self.searchLineEdit)
+        searchLayout.addWidget(self.searchButton)
+        layout.addLayout(searchLayout)
+
+        self.replaceFromLineEdit = QLineEdit()
+        self.replaceFromLineEdit.setPlaceholderText("Replace from")
+        self.replaceToLineEdit = QLineEdit()
+        self.replaceToLineEdit.setPlaceholderText("Replace to")
+        self.replaceButton = QPushButton("Replace All")
+        self.replaceButton.clicked.connect(self.replaceAllText)
+        replaceLayout = QHBoxLayout()
+        replaceLayout.addWidget(self.replaceFromLineEdit)
+        replaceLayout.addWidget(self.replaceToLineEdit)
+        replaceLayout.addWidget(self.replaceButton)
+        layout.addLayout(replaceLayout)
+
+        centralWidget.setLayout(layout)
+        self.setWindowTitle('Simple Notepad')
+        self.setGeometry(300, 300, 600, 400)
+
+    def searchAndReplace(self):
+        search_text = self.searchLineEdit.text()
+        if search_text:
+            self.highlightAndAskReplace(search_text)
+
+    def replaceAllText(self):
+        from_text = self.replaceFromLineEdit.text()
+        to_text = self.replaceToLineEdit.text()
+        if from_text and to_text:
+            self.textEdit.setPlainText(self.textEdit.toPlainText().replace(from_text, to_text))
+            QMessageBox.information(self, "Replace", f"All occurrences of '{from_text}' have been replaced with '{to_text}'.")
+
+    def highlightAndAskReplace(self, text):
+        cursor = QTextCursor(self.textEdit.document())
+        format = QTextCharFormat()
+        format.setBackground(QColor('yellow'))
+
+        cursor.select(QTextCursor.Document)
+        cursor.setCharFormat(QTextCharFormat())  # Reset format
+        cursor.clearSelection()
+
+        find_cursor = self.textEdit.document().find(text)
+        while not find_cursor.isNull():
+            find_cursor.mergeCharFormat(format)
+            reply = QMessageBox.question(self, 'Replace Text',
+                                         f"Do you want to replace '{text}'?",
+                                         QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel, QMessageBox.No)
+
+            if reply == QMessageBox.Yes:
+                find_cursor.insertText(self.replaceToLineEdit.text())
+            elif reply == QMessageBox.Cancel:
+                break  # Stop the replace process
+            find_cursor = self.textEdit.document().find(text, find_cursor)
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    ex = Notepad()
+    ex.show()
+    sys.exit(app.exec_())
+
+___________________________________________________________________________________________________
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
