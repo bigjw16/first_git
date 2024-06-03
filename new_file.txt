@@ -171,11 +171,11 @@ switch: branch의 전환 및 new branch 생성 및 전환
 merge: 두개 이상의 브랜치를 병합하는데 사용하는 명령어
 rebase: merge명령어로 수행되지 않지만 branch를 병합하는데 사용됨 base commit을 변경하여
           일직선 구조의 branch를 만들 수 있음
-tag:
-clone:
-push:
-pull:
-stash:
+tag: 특정 commit을 가르키는 포인터로서 branch가 아님
+clone: 서버의 콘텐츠를 local로 복사하는 명령어
+push: local의 commit을 서버에 동기화 시키는 명령어
+pull: 서버의 최신 commit을 받아와 임시영역(fetch)에 저장
+stash: commit할 준비가 되지 않은 변경 사항을 임시로 저장하는 명령어 
 
 
 
