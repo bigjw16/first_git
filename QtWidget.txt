@@ -1,3 +1,21 @@
+QLinEdit
+QRadioButton
+QCheckBox
+QGroupBox
+QComboBox
+QSlider
+QSpinBox
+QDoubleSpinBox
+QProgressBar
+QListWidget
+QTextEdit
+QTextEdit-Note
+Qprogressbar
+Qthread
+Qmenubar
+Qstatusbar
+Qtoolbar
+QListWidget
 ___________________________________________________________________________________________________
 <QLineEdit>
 import sys
@@ -116,7 +134,7 @@ if __name__ == "__main__":
     main_wnd = MW()
     sys.exit(app.exec())
 ___________________________________________________________________________________________________
-<QCkeckBox>
+<QCheckBox>
 import sys
 
 from PySide6.QtWidgets import (QApplication, QWidget, QLabel, QVBoxLayout, QCheckBox,
@@ -193,126 +211,11 @@ if __name__ == "__main__":
     sys.exit(app.exec())
 ___________________________________________________________________________________________________
 <QGroupBox>
-import sys, os
-from PySide6.QtWidgets import (QApplication, QWidget, 
-                             QRadioButton, QCheckBox, QButtonGroup,
-                             QHBoxLayout,QVBoxLayout,
-                             QGroupBox)
-from PySide6.QtCore import Qt
-
-class MW (QWidget):
-
-    def __init__(self):
-        super().__init__()
-        self.init_ui()
-
-    def init_ui(self):
-        self.setMinimumSize(400,200)
-        self.setWindowTitle("QGroupBox Ex")
-        self.setup_main_wnd()
-        self.show()
-
-    def setup_main_wnd(self):
-
-        lm = QHBoxLayout()
-        self.checks = QGroupBox("QCheckBox Grp")
-        self.checks.setCheckable(True)
-        self.checks.setChecked(False)
-        self.radios = QGroupBox("QRadioButton Grp")
-        lm.addWidget(self.checks)
-        lm.addWidget(self.radios)
-
-        self.set_checks()
-        self.set_radios()
-
-        self.setLayout(lm)
-
-    def set_checks(self):
-
-        lm = QVBoxLayout()
-
-        self.button_grp_checks = QButtonGroup()
-        for idx in range(3):
-            cb = QCheckBox(f"check {idx}")
-            self.button_grp_checks.addButton(cb)
-            lm.addWidget(cb)
-        self.checks.setLayout(lm)
-        self.button_grp_checks.setExclusive(False)
-        self.button_grp_checks.buttonClicked.connect(self.toggle_check_box)
-        self.checks.clicked.connect(self.clk_checks)
-
-    def set_radios(self):
-
-        lm = QVBoxLayout()
-        self.button_grp_radios = QButtonGroup()
-        for idx in range(3):
-            rb = QRadioButton(f"radio {idx}")
-            self.button_grp_radios.addButton(rb)
-            lm.addWidget(rb)
-        self.radios.setLayout(lm)
-        self.button_grp_radios.setExclusive(False)
-        self.button_grp_radios.buttonClicked.connect(self.toggle_radio_btn)
-        self.radios.clicked.connect(self.clk_radios)
-
-    def toggle_check_box(self, state):
-        # if state:
-        #     print(self.sender().text())
-
-        for c in self.button_grp_checks.buttons():
-            # if c.checkState() == Qt.CheckState.Checked:
-            if c.isChecked():
-                print(c.text())
-
-        print("======================")    
-        print()
-        print("======================")
-
-        # ---------------------------------
-        # # 아래는 
-        # # checked button 반환이나 
-        # # 여러개를 선택할 수 있는 경우 
-        # # 동작이 독특하므로 주석을 해제하고,
-        # # 한번 테스트 해볼것.
-        # a = self.button_grp_checks.checkedButton()
-        # if a is not None:                    
-        #     print(a.text())
-        # else:
-        #     print('not checked!')                    
-        # print("======================")    
-    def toggle_radio_btn(self, state):
-        # if state:
-        #     print("sender:", self.sender().text())
-
-        for idx, c in enumerate(self.button_grp_radios.buttons()):
-            if c.isChecked():
-                print(idx,c.text())    
-        print("======================\n\n")
-
-        # ---------------------------------
-        # # 아래는 
-        # # checked button 반환이나 
-        # # 여러개를 선택할 수 있는 경우 
-        # # 동작이 독특하므로 주석을 해제하고,
-        # # 한번 테스트 해볼것.
-        # a = self.button_grp_radios.checkedButton()
-        # if a is not None:                    
-        #     print(a.text())
-        # else:
-        #     print('not checked!')                    
-        # print("======================")
-
-    def clk_checks(self, checked):
-        print("checks!")
-        print(checked)
-    def clk_radios(self, button):
-        print("radios!")
-        print(button)
-
-
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     wnd = MW()
-    sys.exit(app.exec())             
+    sys.exit(app.exec())
+             
 import sys, os
 from PySide6.QtWidgets import (QApplication, QWidget, 
                              QRadioButton, QCheckBox, QButtonGroup,
@@ -550,7 +453,8 @@ if __name__ == "__main__":
 
 ___________________________________________________________________________________________________
 <QDoubleSpinBox>
-
+QSpinBox: int값을 입력받을 때 사용
+QDoubleSpinBox: float 값을 입력받을 때 사용
 ___________________________________________________________________________________________________
 <QProgressBar>
 import sys
@@ -690,6 +594,245 @@ if __name__ == "__main__":
     sys.exit(app.exec_())
 
 ___________________________________________________________________________________________________
+<Qmenubar>
+import sys, os
+from PySide6.QtWidgets import(QApplication,
+                              QMainWindow,
+                              QLabel,
+                              QToolBar,
+                            
+)
+from PySide6.QtGui import QAction, QIcon
+from PySide6.QtCore import Qt, QSize
+
+class MW (QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.init_ui()
+    def init_ui(self):
+        self.fstr = os.path.dirname(
+        os.path.abspath(__file__)
+        )
+        self.setMinimumSize(600,600)
+        self.setWindowTitle("Menu bar Ex")
+        self.setup_main_wnd()   
+        self.create_actions()       
+        self.create_menu()        
+        self.show()
+
+    def create_actions (self):
+        self.quit_act = QAction("Quit")
+        self.quit_act.setShortcut("Ctrl+X")
+        self.quit_act.setIcon(QIcon(f"{self.fstr}/img/exit.png"))
+        # self.quit_act.setIcon(QIcon("img/exit.png"),"Quit")
+        self.quit_act.triggered.connect(self.close)
+        
+        self.open_act = QAction('Open')
+        self.open_act.setShortcut('Ctrl+O')
+        self.open_act.setIcon(QIcon(f"{self.fstr}/img/open_file.png"))
+        self.open_act.triggered.connect(self.close)
+        
+        self.save_act = QAction('Save')
+        self.save_act.setShortcut('Ctrl+S')
+        self.save_act.setIcon(QIcon(f"{self.fstr}/img/save_file.png"))
+        self.save_act.triggered.connect(self.close)
+        
+        self.print_act = QAction('Print')
+        self.print_act.setShortcut('Ctrl+P')
+        self.print_act.setIcon(QIcon(f"{self.fstr}/img/Print.png"))
+        self.print_act.triggered.connect(self.close)
+        
+        self.clear_act = QAction('Clear')
+        self.clear_act.setShortcut('Ctrl+C')
+        self.clear_act.setIcon(QIcon(f"{self.fstr}/img/clear.png"))
+        self.clear_act.triggered.connect(self.close)
+
+    def create_menu(self):
+        mb = self.menuBar()                        
+        menu_item = mb.addMenu("test")   
+        menu_item.addAction(self.quit_act)
+        menu_item.addAction(self.open_act)
+        menu_item.addAction(self.save_act)
+        menu_item.addAction(self.print_act)
+        menu_item.addAction(self.clear_act)
+        mb.setNativeMenuBar(False) # for macOS
+
+    # def create_tool_bar(self):
+    #     tool_bar = QToolBar("QToolBar Test")
+    #     tool_bar.setIconSize(Qsize(30,30))
+        
+    #     tool_bar.addAction(self.open_act)
+    #     tool_bar.addSeparator()
+    #     tool_bar.addAction(self.close_act)
+        
+    #     self.addToolBar(tool_bar)
+    
+    # def open_event(self):
+    #     if self.label.text() != 'open clicked ok':
+    #         self.label.setText('open clicked ok')
+    #     else:
+    #         self.lavel.setText('open clicke ok again')
+            
+    # def save_event(self):
+    #     if self.label.text() != 'save clicked ok':
+    #         self.label.setText('save clicked ok')
+    #     else:
+    #         self.lavel.setText('save clicke ok again')
+            
+    # def print_event(self):
+    #     if self.label.text() != 'print clicked ok':
+    #         self.label.setText('print clicked ok')
+    #     else:
+    #         self.lavel.setText('print clicke ok again')
+            
+    # def clear_event(self):
+    #     if self.label.text() != 'clear clicked ok':
+    #         self.label.setText('clear clicked ok')
+    #     else:
+    #         self.lavel.setText('clear clicke ok again')
+        
+    def setup_main_wnd(self):
+        label = QLabel('test')
+        label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.setCentralWidget(label)
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    wnd = MW()
+    sys.exit(app.exec())
+
+___________________________________________________________________________________________________
+<Qstatusbar>
+import sys, os
+from datetime import datetime
+from PySide6.QtWidgets import (
+    QMainWindow,
+    QWidget,
+    QApplication,
+    QStatusBar,
+    QLabel,
+    QProgressBar,
+    QPushButton
+)
+
+from PySide6.QtCore import QTimer
+
+class MW(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        
+        self.setFixedSize(300,200)
+        
+        self.status_bar = QStatusBar()
+        self.setStatusBar(self.status_bar)
+        
+        self.timer0 = QTimer(self)
+        self.timer0.timeout.connect(self.update_clk)
+        self.timer0.start(1000)
+        
+        self.clk_label = QLabel()
+        self.status_bar.addPermanentWidget(self.clk_label)
+        
+        self.progress_bar = QProgressBar(self, minimum=0, maximum=100)
+        self.status_bar.addWidget(self.progress_bar)
+        
+        self.btn = QPushButton('start progress')
+        self.btn.clicked.connect(self.start_progress)
+        self.setCentralWidget(self.btn)
+        
+        self.timer1 = QTimer(self)
+        self.timer1.timeout.connect(self.update_progress)
+        self.progress_value=0
+        
+        self.show()
+        
+    def start_progress(self):
+        self.progress_value = 0
+        self.progress_bar.reset()
+        self.progress_bar.setValue(self.progress_value)
+        self.timer1.start(100)
+        self.status_bar.showMessage('progress started...', 2000)
+        
+    def update_clk(self):
+        now = datetime.now()
+        now_str = now.strftime('%H:%M:%S')
+        self.clk_label.setText(now_str)
+        
+    def update_progress(self):
+        if self.progress_value <100:
+            self.progress_value +=1
+            self.progress_bar.setValue(self.progress_value)
+            
+        else:
+            self.timer1.stop()
+            self.status_bar.showMessage('progress completed...', 2000)
+            
+if __name__ =="__main__":
+    app = QApplication(sys.argv)
+    wnd = MW()
+    sys.exit(app.exec())
+___________________________________________________________________________________________________
+<Qtoolbar>
+import sys, os
+
+from PySide6.QtWidgets import (
+    QApplication, QMainWindow, 
+    QToolBar, QMessageBox,
+)
+from PySide6.QtGui import (
+    QAction, QIcon,
+)
+
+class MW(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setup_main_wnd()
+
+    def setup_main_wnd(self):
+        self.setWindowTitle("Ex0: QToolBar")
+        self.setFixedSize(300,200)
+        root_dir = os.path.dirname(__file__)
+        self.create_actions(root_dir)
+        self.create_toolbar()
+        self.show()
+
+    def create_actions(self, root_dir):
+
+        icon0_path = os.path.join(root_dir,
+                                 'img/compress.png')
+        icon1_path = os.path.join(root_dir,
+                                 'img/favorite.png')
+        self.button_action0 = QAction("action0", self)
+        self.button_action0.setStatusTip("This is the first button")
+        self.button_action0.setIcon(QIcon(icon0_path))
+        self.button_action0.setShortcut('Ctrl+1')
+        self.button_action0.triggered.connect(self.onAction0)
+
+        self.button_action1 = QAction("action1", self)
+        self.button_action1.setStatusTip("This is the second button")
+        self.button_action1.setIcon(QIcon(icon1_path))
+        self.button_action1.setShortcut('Ctrl+2')
+        self.button_action1.triggered.connect(self.onAction1)
+
+    def create_toolbar(self):    
+        self.toolbar = QToolBar("Main Toolbar")
+        self.addToolBar(self.toolbar)
+        self.toolbar.addAction(self.button_action0)
+        self.toolbar.addAction(self.button_action1)
+
+
+    def onAction0(self):
+        QMessageBox.information(self, "Message", "You clicked the first button!")
+
+    def onAction1(self):
+        QMessageBox.information(self, "Message", "You clicked the second button!")
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    wnd = MW()
+    sys.exit(app.exec())
+
+___________________________________________________________________________________________________
 <QTextEdit-Note>
 import sys
 from PySide6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, 
@@ -753,6 +896,339 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     mw = MW()
     sys.exit(app.exec_())
+___________________________________________________________________________________________________
+<Qprogressbar>
+import sys
+
+from PySide6.QtWidgets import(QApplication,
+                              QMainWindow,
+                              QProgressBar,
+                              QPushButton,
+                              QWidget,
+                              QVBoxLayout,
+                              QLayout)
+
+from PySide6.QtCore import QTimer
+
+class MW(QMainWindow):
+    
+    def __init__(self):
+        super(MW, self).__init__()
+        self.setWindowTitle("ex: QProgressBar")
+        self.setGeometry(200,200,300,150)
+        
+        self.progressBar=QProgressBar(self, minimum=0, maximum=10)
+        self.progressValue=self.progressBar.minimum()
+        self.progressBar.setGeometry(50,50,200,30)
+        
+        self.startButton=QPushButton("start", self)
+        self.startButton.setGeometry(100,100,100,30)
+        self.startButton.clicked.connect(self.startProgress)
+        
+        self.timer=QTimer(self)
+        self.timer.timeout.connect(self.updateProgress)
+        self.progressValue=0
+        
+        lm=QVBoxLayout()
+        lm.addWidget(self.progressBar)
+        lm.addWidget(self.startButton)
+        
+        tmp=QWidget()
+        tmp.setLayout(lm)
+        
+        self.setCentralWidget(tmp)
+        self.show()
+        
+    def startProgress(self):
+        self.progressBar.reset()
+        self.progressValue=self.progressBar.value()
+        self.startButton.setEnabled(False)
+        self.timer.start(100)
+        
+    def updateProgress(self):
+        self.progressValue+=1
+        self.progressBar.setValue(self.progressValue)
+        if self.progressValue>=self.progressBar.maximum():
+            self.timer.stop()
+            # self.progressBar.reset()
+            self.startButton.setEnabled(True)
+            
+            
+if __name__ == "__main__":
+    app=QApplication(sys.argv)
+    window=MW()
+    sys.exit(app.exec())
+___________________________________________________________________________________________________
+<Qthread>
+from PySide6.QtCore import QThread, Signal
+from PySide6.QtWidgets import QApplication, QLabel, QPushButton, QVBoxLayout, QWidget, 
+			    QProgressBar
+import time
+import sys
+
+class WorkerThread(QThread):
+    update_signal = Signal(int)  
+
+    def __init__(self, id):
+        super().__init__()
+        self.id = id
+
+    def run(self):
+        for i in range(101):
+            time.sleep(0.1) 
+            self.update_signal.emit(i) 
+        self.update_signal.emit(100)
+
+class MonitorThread(QThread):
+    all_done = Signal() 
+
+    def __init__(self, threads):
+        super().__init__()
+        self.threads = threads
+
+    def run(self):
+        for thread in self.threads:
+            thread.wait() 
+        self.all_done.emit() 
+
+class MW(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.init_ui()
+        self.show()
+
+    def init_ui(self):
+        self.layout = QVBoxLayout(self)
+
+        self.status_label = QLabel("Click 'Start All Threads' to run the threads", self)
+        self.layout.addWidget(self.status_label)
+
+        self.start_all_button = QPushButton("Start All Threads", self)
+        self.start_all_button.clicked.connect(self.start_all_threads)
+        self.layout.addWidget(self.start_all_button)
+
+        self.progressBars = []
+        self.threads = []
+        self.buttons = []
+
+        for i in range(3):
+            label = QLabel(f"Thread {i+1} Example", self)
+            progressBar = QProgressBar(self)
+            progressBar.setMaximum(100)
+            button = QPushButton(f"Start Thread {i+1}", self)
+            button.clicked.connect(self.make_start_thread(i))
+
+            self.layout.addWidget(label)
+            self.layout.addWidget(progressBar)
+            self.layout.addWidget(button)
+
+            worker = WorkerThread(i)
+            worker.update_signal.connect(progressBar.setValue)
+
+            self.progressBars.append(progressBar)
+            self.threads.append(worker)
+            self.buttons.append(button)
+
+        self.monitor_thread = MonitorThread(self.threads)
+        self.monitor_thread.all_done.connect(self.update_status_label)
+
+    def make_start_thread(self, index):
+        def start_thread():
+            if not self.threads[index].isRunning(): 
+                self.threads[index].start()
+        return start_thread
+
+    def start_all_threads(self):
+        for thread in self.threads:
+            if not thread.isRunning():
+                thread.start()
+        self.monitor_thread.start()
+
+    def update_status_label(self):
+        self.status_label.setText("All threads completed!")
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    wnd = MW()
+    sys.exit(app.exec())
+___________________________________________________________________________________________________
+<QListWidget>
+import sys
+from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QListWidget, 
+			   QPushButton
+
+class Example(QWidget):
+    def __init__(self):
+        super().__init__()
+
+        self.initUI()
+
+    def initUI(self):
+        self.layout = QVBoxLayout()
+
+        self.listWidget = QListWidget()
+        self.listWidget.addItem("Item 1")
+        self.listWidget.addItem("Item 2")
+        self.listWidget.addItem("Item 3")
+
+        self.layout.addWidget(self.listWidget)
+
+        self.button = QPushButton("Print Selected Item")
+        self.button.clicked.connect(self.printSelectedItem)
+        self.layout.addWidget(self.button)
+
+        self.setLayout(self.layout)
+
+        self.setWindowTitle('QListWidget Example')
+        self.show()
+
+    def printSelectedItem(self):
+        selected_item = self.listWidget.currentItem()
+        if selected_item:
+            print(f"Selected item: {selected_item.text()}")
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    ex = Example()
+    sys.exit(app.exec())
+
+___________________________________________________________________________________________________
+<QTreeview + Dirlist>
+import sys
+import os
+from PySide6.QtWidgets import (
+    QApplication, QMainWindow, QTreeView, QFileSystemModel,
+    QVBoxLayout, QWidget, QStatusBar, QHBoxLayout, QFileDialog, QMessageBox
+)
+import matplotlib.pyplot as plt
+from PySide6.QtGui import QStandardItemModel, QStandardItem, QAction
+from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.figure import Figure
+from matplotlib.image import imread
+
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.setWindowTitle("Directory Tree and Image Viewer")
+
+        main_widget = QWidget()
+        self.setCentralWidget(main_widget)
+
+        layout = QHBoxLayout()
+        main_widget.setLayout(layout)
+
+        self.tree_view = QTreeView()
+        self.model = QFileSystemModel()
+        self.model.setRootPath('')
+        self.tree_view.setModel(self.model)
+        self.tree_view.setRootIndex(self.model.index(''))
+        self.tree_view.clicked.connect(self.load_image_from_tree)
+
+        layout.addWidget(self.tree_view)
+
+        self.status_bar = QStatusBar()
+        self.setStatusBar(self.status_bar)
+
+        self.figure = Figure()
+        self.canvas = FigureCanvas(self.figure)
+        self.ax = self.figure.add_subplot(111)
+        self.ax.axis('off')
+        layout.addWidget(self.canvas)
+
+        menubar = self.menuBar()
+        file_menu = menubar.addMenu("File")
+        menubar.setNativeMenuBar(False)
+
+        open_action = QAction("Open Directory", self)
+        open_action.triggered.connect(self.open_directory)
+        file_menu.addAction(open_action)
+
+        self.dragging = False
+        self.rect = None
+        self.start_point = (0, 0)
+        self.click_count = 0
+        self.image = None
+
+        self.canvas.mpl_connect('button_press_event', self.on_click)
+        self.canvas.mpl_connect('motion_notify_event', self.on_drag)
+        self.canvas.mpl_connect('button_release_event', self.on_release)
+
+    def open_directory(self):
+        dir_path = QFileDialog.getExistingDirectory(self, "Select Directory")
+        if dir_path:
+            self.tree_view.setRootIndex(self.model.index(dir_path))
+
+    def load_image_from_tree(self, index):
+        file_path = self.model.filePath(index)
+        if os.path.isfile(file_path) and file_path.lower().endswith(('.png', '.jpg', '.jpeg', '.bmp', '.gif')):
+            self.load_image(file_path)
+
+    def load_image(self, file_path):
+        self.image = imread(file_path)
+        self.ax.clear()
+        self.ax.imshow(self.image)
+        self.ax.axis('on')
+        self.canvas.draw()
+
+    def on_click(self, event):
+        if self.image is None:
+            return
+        if event.button == 3:
+            self.on_right_click(event)
+        else:
+            if event.inaxes != self.ax:
+                return
+            self.dragging = True
+            self.start_point = (event.xdata, event.ydata)
+            self.rect = self.ax.add_patch(
+                plt.Rectangle(self.start_point, 0, 0, 
+                              fill=False, color='red')
+            )
+            self.canvas.draw()
+
+    def on_right_click(self, event):
+        if self.image is None:
+            return
+        if event.dblclick:
+            self.ax.add_patch(
+                plt.Circle((event.xdata, event.ydata), 
+                           10, color='blue', fill=True)
+            )
+            self.canvas.draw()
+
+    def on_drag(self, event):
+        if self.image is None:
+            return
+        if not self.dragging or not event.inaxes:
+            return
+        x0, y0 = self.start_point
+        x1, y1 = event.xdata, event.ydata
+        self.rect.set_width(x1 - x0)
+        self.rect.set_height(y1 - y0)
+        self.rect.set_xy((min(x0, x1), min(y0, y1)))
+        self.canvas.draw()
+
+    def on_release(self, event):
+        if self.image is None:
+            return
+        if event.button == 3:
+            return
+        if self.dragging:
+            self.dragging = False
+            response = QMessageBox.question(self, 'Confirm', 'Keep the rectangle?', QMessageBox.Yes | QMessageBox.No)
+            if response == QMessageBox.No:
+                self.rect.remove()
+            self.canvas.draw()
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    mainWin = MainWindow()
+    mainWin.show()
+    sys.exit(app.exec())
+
+
+
 
 
 

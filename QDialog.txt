@@ -1,0 +1,458 @@
+QMessgeBox
+	-information
+	-about
+	-question
+	-critical
+	-warning
+-----------------------------------------------------------------------------------------------------------
+<information>
+import sys
+from PySide6.QtWidgets import (QApplication, 
+               QMainWindow, QPushButton, 
+               QVBoxLayout, QMessageBox)
+
+class MW(QMainWindow):
+
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle('QDialog.information Example')
+        button = QPushButton(‘Press me for a dialog!’,self)
+        button.clicked.connect(self.button_clicked)
+        self.setCentralWidget(button)
+        self.show()
+
+    def button_clicked(self, s):
+        print("click", s)
+        result = QMessageBox.information(
+                   self, 
+                   'Message', 
+                   'This is an information message.',
+                   QMessageBox.Ok | QMessageBox.Cancel, 
+                   QMessageBox.Ok)
+
+        print('Dialog result:', result)
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    wnd = MW()
+    app.exec()
+___________________________________________________________________________________________________
+<about>
+import sys
+from PySide6.QtWidgets import (QApplication, 
+               QMainWindow, QPushButton, 
+               QVBoxLayout, QMessageBox)
+
+class MW(QMainWindow):
+
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle('QDialog.information Example')
+        button = QPushButton(‘Press me for a dialog!’,self)
+        button.clicked.connect(self.button_clicked)
+        self.setCentralWidget(button)
+        self.show()
+
+    def button_clicked(self, s):
+        print("click", s)
+        result = QMessageBox.about( self,
+			         "About This SW",
+                                                """<p>The example of QMessageBox</p>
+                                                <p>version 0.1</p>""")
+
+        print('Dialog result:', result)
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    wnd = MW()
+    app.exec()
+___________________________________________________________________________________________________
+<question>
+import sys
+from PySide6.QtWidgets import (QApplication, 
+               QMainWindow, QPushButton, 
+               QVBoxLayout, QMessageBox)
+
+class MW(QMainWindow):
+
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle('QDialog.question Example')
+        button = QPushButton(‘Press me for a dialog!’,self)
+        button.clicked.connect(self.button_clicked)
+        self.setCentralWidget(button)
+        self.show()
+
+    def button_clicked(self, s):
+        print("click", s)
+        response = QMessageBox.question(
+                      self, 
+                      'Question Message', 
+                      'Do you like PySide6?',
+                      MessageBox.Yes | QMessageBox.No, 
+                      QMessageBox.Yes)
+
+        if response == QMessageBox.Yes:
+            print('User likes Python!')
+        else:
+            print('User does not like Python!')
+
+        print('Dialog result:', result)
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    wnd = MW()
+    app.exec()
+___________________________________________________________________________________________________
+<critical>
+import sys
+from PySide6.QtWidgets import (QApplication, 
+               QMainWindow, QPushButton, 
+               QVBoxLayout, QMessageBox)
+
+class MW(QMainWindow):
+
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle('QDialog.critical Example')
+        button = QPushButton(‘Press me for a dialog!’,self)
+        button.clicked.connect(self.button_clicked)
+        self.setCentralWidget(button)
+        self.show()
+
+    def button_clicked(self, s):
+        print("click", s)
+        result = QMessageBox.critical(
+                   self, 
+                   'Critical', 
+                   'This is a critical error message.',
+                   QMessageBox.Ok, 
+                   QMessageBox.Ok)
+
+        print('Dialog result:', result)
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    wnd = MW()
+    app.exec()
+___________________________________________________________________________________________________
+<warning>
+import sys
+from PySide6.QtWidgets import (QApplication, 
+               QMainWindow, QPushButton, 
+               QVBoxLayout, QMessageBox)
+
+class MW(QMainWindow):
+
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle('QDialog.warning Example')
+        button = QPushButton(‘Press me for a dialog!’,self)
+        button.clicked.connect(self.button_clicked)
+        self.setCentralWidget(button)
+        self.show()
+
+    def button_clicked(self, s):
+        print("click", s)
+        result = QMessageBox.warning(
+                   self, 
+                   'Warning', 
+                   'This is a warning message.',
+                   QMessageBox.Ok | QMessageBox.Cancel, 
+                   QMessageBox.Ok)
+
+        print('Dialog result:', result)
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    wnd = MW()
+    app.exec()
+___________________________________________________________________________________________________
+QInputDialog
+	-getlnt
+	-getDouble
+	-getItem
+	-getText
+	-getMultilineText
+----------------------------------------------------------------------------------------------------------
+<getlnt>
+import sys
+
+from PySide6.QtWidgets import (
+        QApplication, QMainWindow,
+        QWidget, QPushButton, QLabel, QVBoxLayout,
+        QInputDialog)
+
+class MW (QMainWindow):
+
+    def __init__(self):
+        super(MW, self).__init__()
+        self.init_ui()
+        self.show()
+
+    def init_ui(self):
+
+        self.button0 = QPushButton('Test.')
+        self.button0.clicked.connect(self.slot00)
+
+        self.ret_label = QLabel()
+
+        layout = QVBoxLayout()
+        layout.addWidget(self.button0)
+        layout.addWidget(self.ret_label)
+
+        tmp = QWidget()
+        tmp.setLayout(layout)
+
+        self.setCentralWidget(tmp)
+
+    def slot00(self):
+        print(self.sender())
+
+        sender = self.sender()
+
+        if sender == self.button0:
+            ret_int, is_ok = QInputDialog.getInt(
+                    self,
+                    "Input Integer",
+                    "Enter Your Int Value!",
+                    0,
+                    0, 100,
+                    3,
+                    )
+            if is_ok:
+                self.ret_label.setText(f'{ret_int}')
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    mw = MW()
+    sys.exit(app.exec())
+___________________________________________________________________________________________________
+<getDouble>
+import sys
+
+from PySide6.QtWidgets import (
+        QApplication, QMainWindow,
+        QWidget, QPushButton, QLabel, QVBoxLayout,
+        QInputDialog)
+
+class MW (QMainWindow):
+
+    def __init__(self):
+        super(MW, self).__init__()
+        self.init_ui()
+        self.show()
+
+    def init_ui(self):
+
+        self.button0 = QPushButton('Test.')
+        self.button0.clicked.connect(self.slot00)
+
+        self.ret_label = QLabel()
+
+        layout = QVBoxLayout()
+        layout.addWidget(self.button0)
+        layout.addWidget(self.ret_label)
+
+        tmp = QWidget()
+        tmp.setLayout(layout)
+
+        self.setCentralWidget(tmp)
+
+    def slot00(self):
+        print(self.sender())
+
+        sender = self.sender()
+
+        if sender == self.button0:
+            ret_double, is_ok = QInputDialog.getDouble(
+                    self,
+                    "Input Double",
+                    "Enter Your Double Value!",
+                    0,
+                    0.0, 100.0,
+                    4,
+                    )
+            if is_ok:
+                self.ret_label.setText(f'{ret_double}')
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    mw = MW()
+    sys.exit(app.exec())
+___________________________________________________________________________________________________
+<getItem>
+import sys
+
+from PySide6.QtWidgets import (
+        QApplication, QMainWindow,
+        QWidget, QPushButton, QLabel, QVBoxLayout,
+        QInputDialog)
+
+class MW (QMainWindow):
+
+    def __init__(self):
+        super(MW, self).__init__()
+        self.init_ui()
+        self.show()
+
+    def init_ui(self):
+
+        self.button0 = QPushButton('Test.')
+        self.button0.clicked.connect(self.slot00)
+
+        self.ret_label = QLabel()
+
+        layout = QVBoxLayout()
+        layout.addWidget(self.button0)
+        layout.addWidget(self.ret_label)
+
+        tmp = QWidget()
+        tmp.setLayout(layout)
+
+        self.setCentralWidget(tmp)
+
+    def slot00(self):
+        print(self.sender())
+
+        sender = self.sender()
+
+        if sender == self.button0:
+            ret_item, is_ok = QInputDialog.getItem(
+                    self,
+                    "Input Double",
+                    "Enter Your Double Value!",
+                    ["faith", "hope", "love],
+                    0,
+                    )
+            if is_ok:
+                self.ret_label.setText(f'{ret_item}')
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    mw = MW()
+    sys.exit(app.exec())
+___________________________________________________________________________________________________
+<getText>
+import sys
+
+from PySide6.QtWidgets import (
+        QApplication, QMainWindow,
+        QWidget, QPushButton, QLabel, QVBoxLayout,
+        QLineEdit, QInputDialog)
+
+class MW (QMainWindow):
+
+    def __init__(self):
+        super(MW, self).__init__()
+        self.init_ui()
+        self.show()
+
+    def init_ui(self):
+
+        self.button0 = QPushButton('Test.')
+        self.button0.clicked.connect(self.slot00)
+
+        self.ret_label = QLabel()
+
+
+        layout = QVBoxLayout()
+        layout.addWidget(self.button0)
+        layout.addWidget(self.ret_label)
+
+        tmp = QWidget()
+        tmp.setLayout(layout)
+
+        self.setCentralWidget(tmp)
+
+    def slot00(self):
+        print(self.sender())
+
+        sender = self.sender()
+
+        if sender == self.button0:
+            ret_text, is_ok = QInputDialog.getText(
+                    self,
+                    "Input Text",
+                    "Enter Your Text!",
+                    QLineEdit.PasswordEchoOnEdit,
+                    "default text!",
+                    )
+            if is_ok:
+                self.ret_label.setText(f'{ret_text}')
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    mw = MW()
+    sys.exit(app.exec())
+___________________________________________________________________________________________________
+<getMultilineText>
+import sys
+
+from PySide6.QtWidgets import (
+        QApplication, QMainWindow,
+        QWidget, QPushButton, QLabel, QVBoxLayout,
+        QInputDialog)
+
+class MW (QMainWindow):
+
+    def __init__(self):
+        super(MW, self).__init__()
+        self.init_ui()
+        self.show()
+
+    def init_ui(self):
+
+        self.button0 = QPushButton('Test.')
+        self.button0.clicked.connect(self.slot01)
+
+        self.ret_label = QLabel()
+
+        layout = QVBoxLayout()
+        layout.addWidget(self.button0)
+        layout.addWidget(self.ret_label)
+
+        tmp = QWidget()
+        tmp.setLayout(layout)
+
+        self.setCentralWidget(tmp)
+
+    def slot01(self):
+        print(self.sender())
+
+        sender = self.sender()
+
+        if sender == self.button0:
+            ret_text, is_ok = QInputDialog.getMultiLineText(
+                    self,
+                    "Input Text",
+                    "Enter Your Text!",
+                    "default text!",
+                    )
+            if is_ok:
+                self.ret_label.setText(f'{ret_text}')
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    mw = MW()
+    sys.exit(app.exec())
+___________________________________________________________________________________________________
+<QFileDialog>
+file_name, is_ok = QFileDialog.getOpenFileName(
+               self,                      
+               "Open file",                   
+               "/mnt/d/lecture/pyqt/",
+               "txt files (*.txt, *.html, *.py)"
+)
+----------------------------------------------------------------------------------------------------------
+options = QFileDialog.Options()
+options |= QFileDialog.ShowDirsOnly
+directory_path = QFileDialog.getExistingDirectory(None,
+                                                  "Select a Directory",
+                                                  "/home",
+                                                  options=options)
+if directory_path:
+    QMessageBox.information(None, "Selected Directory", f"You selected: {directory_path}")
+___________________________________________________________________________________________________
+
+
